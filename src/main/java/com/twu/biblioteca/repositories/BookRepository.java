@@ -18,5 +18,4 @@ public class BookRepository {
     public void addBookToList(Book book) {
         bookList.add(book);
     }
-
 }
