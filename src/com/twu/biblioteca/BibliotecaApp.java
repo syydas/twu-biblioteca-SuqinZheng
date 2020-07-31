@@ -13,13 +13,13 @@ public class BibliotecaApp {
     public static BookRepository bookRepository = new BookRepository();
 
     public static void main(String[] args) {
-        List<Book> bookList = new ArrayList<>();
+        /*List<Book> bookList = new ArrayList<>();
         bookList.add(new Book("book1", "authorA", Year.of(1995)));
         bookList.add(new Book("book2", "authorB", Year.of(1991)));
         bookList.add(new Book("book3", "authorC", Year.of(1997)));
-        bookRepository.setBookList(bookList);
+        bookRepository.setBookList(bookList);*/
         printWelcomeMessage();
-        menu();
+        //menu();
     }
 
     public static void printWelcomeMessage() {
