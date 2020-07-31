@@ -22,7 +22,7 @@ public class BibliotecaApp {
 
     public static void main(String[] args) {
         printWelcomeMessage();
-        menu();
+        menu(new Scanner(System.in));
     }
 
     public static void printWelcomeMessage() {
@@ -35,16 +35,18 @@ public class BibliotecaApp {
         }
     }
 
-    public static void menu() {
+    public static void menu(Scanner scanner) {
         System.out.println("Enter the number you want to choose");
         System.out.println("1. List of books");
-        Scanner printItem = new Scanner(System.in);
-        String choice = printItem.next();
-        if (BOOKLIST.equals(choice)) {
-            displayBookList();
-        } else {
-            System.out.println("Sorry, you may have entered a wrong number, please check and enter again");
-            menu();
+        while (true) {
+            String choice = scanner.next();
+            if (BOOKLIST.equals(choice)) {
+                displayBookList();
+                break;
+            } else {
+                System.out.println("Please select a valid option!");
+                break;
+            }
         }
     }
 }

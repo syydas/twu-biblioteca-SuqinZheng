@@ -17,6 +17,7 @@ import java.io.PrintStream;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
@@ -63,9 +64,17 @@ public class BibliotecaAppTest {
         String input = "1";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-        BibliotecaApp.menu();
+        BibliotecaApp.menu(new Scanner(System.in));
         assertThat(testOut.toString(), containsString("Enter the number you want to choose\n" + "1. List of books\n"));
         assertThat(testOut.toString(), containsString(bookRepository.getBookList().get(0).toString()));
     }
 
+    @Test
+    public void should_throw_wrong_message_when_select_wrong() {
+        String input = "5";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        BibliotecaApp.menu(new Scanner(System.in));
+        assertThat(testOut.toString(), containsString("Please select a valid option!"));
+    }
 }
