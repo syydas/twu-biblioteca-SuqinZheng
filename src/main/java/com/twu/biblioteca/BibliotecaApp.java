@@ -1,24 +1,20 @@
 package com.twu.biblioteca;
 
 
-import com.twu.biblioteca.entities.Book;
 import com.twu.biblioteca.repositories.BookRepository;
 
-import java.time.Year;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class BibliotecaApp {
     public static BookRepository bookRepository = new BookRepository();
+    private static String[] books = {"book1", "book2", "book3"};
 
     public static void main(String[] args) {
-        /*List<Book> bookList = new ArrayList<>();
-        bookList.add(new Book("book1", "authorA", Year.of(1995)));
-        bookList.add(new Book("book2", "authorB", Year.of(1991)));
-        bookList.add(new Book("book3", "authorC", Year.of(1997)));
-        bookRepository.setBookList(bookList);*/
+        //bookRepository.addBookToList(new Book("book1", "authorA", Year.of(1995)));
+        //bookRepository.addBookToList(new Book("book2", "authorB", Year.of(1991)));
+        //bookRepository.addBookToList(new Book("book3", "authorC", Year.of(1997)));
         printWelcomeMessage();
+        displayBookList();
         //menu();
     }
 
@@ -27,7 +23,7 @@ public class BibliotecaApp {
     }
 
     public static void displayBookList() {
-        for (Book book : bookRepository.getBookList()) {
+        for (String book : books) {
             System.out.println(book);
         }
     }

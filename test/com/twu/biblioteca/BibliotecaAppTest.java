@@ -7,9 +7,7 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
 public class BibliotecaAppTest {
     private ByteArrayOutputStream testOut = new ByteArrayOutputStream();
@@ -26,7 +24,14 @@ public class BibliotecaAppTest {
 
     @Test
     public void give_welcome_message_when_start_the_application() {
-        BibliotecaApp.main(null);
+        BibliotecaApp.printWelcomeMessage();
         assertEquals(testOut.toString(), "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!\n");
     }
+
+    @Test
+    public void give_booklist_after_the_welcome_message_appears() {
+        BibliotecaApp.displayBookList();
+        assertEquals(testOut.toString(), "book1\nbook2\nbook3\n");
+    }
+
 }

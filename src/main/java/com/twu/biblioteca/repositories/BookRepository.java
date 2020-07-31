@@ -8,12 +8,15 @@ import java.util.List;
 public class BookRepository {
     private static List<Book> bookList = new ArrayList<>();
 
-    public static List<Book> getBookList() {
+    public BookRepository() {
+    }
+
+    public List<Book> getBookList() {
         return bookList;
     }
 
-    public static void setBookList(List<Book> bookList) {
-        BookRepository.bookList = bookList;
+    public void addBookToList(Book book) {
+        bookList.add(book);
     }
 
 }
