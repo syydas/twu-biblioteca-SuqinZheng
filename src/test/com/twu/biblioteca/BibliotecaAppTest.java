@@ -61,20 +61,29 @@ public class BibliotecaAppTest {
 
     @Test
     public void should_return_booklist_when_select_list_of_book() {
-        String input = "1";
+        String input = "1 2";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         BibliotecaApp.menu(new Scanner(System.in));
-        assertThat(testOut.toString(), containsString("Enter the number you want to choose\n" + "1. List of books\n"));
+        assertThat(testOut.toString(), containsString("1. List of books\n2. quit\nPlease enter your choice"));
         assertThat(testOut.toString(), containsString(bookRepository.getBookList().get(0).toString()));
     }
 
     @Test
     public void should_throw_wrong_message_when_select_wrong() {
-        String input = "5";
+        String input = "5 2";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         BibliotecaApp.menu(new Scanner(System.in));
         assertThat(testOut.toString(), containsString("Please select a valid option!"));
+    }
+
+    @Test
+    public void should_quit_the_app_when_select_quit() {
+        String input = "2";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        BibliotecaApp.menu(new Scanner(System.in));
+        assertThat(testOut.toString(), containsString("Biblioteca quit!"));
     }
 }
