@@ -11,7 +11,8 @@ import java.util.Scanner;
 public class BibliotecaApp {
     public static BookRepository bookRepository = new BookRepository();
     private static final String BOOKLIST = "1";
-    private static final String QUIT = "2";
+    private static final String QUIT = "q";
+    private static final String CHECKOUT = "2";
     private static final List<Book> BOOKS;
 
     static {
@@ -38,7 +39,7 @@ public class BibliotecaApp {
 
     public static void menu(Scanner scanner) {
         while (true) {
-            System.out.println("1. List of books\n2. quit\nPlease enter your choice");
+            System.out.println("1. List of books\n2. Check out books\nq. quit\nPlease enter your choice");
             String choice = scanner.next();
             if (QUIT.equals(choice)) {
                 System.out.println("Biblioteca quit!");
@@ -48,12 +49,21 @@ public class BibliotecaApp {
         }
     }
 
-    private static void handle(String choice) {
+    public static void handle(String choice) {
         Scanner scanner = new Scanner(System.in);
         if (BOOKLIST.equals(choice)) {
             displayBookList();
+        } else if (CHECKOUT.equals(choice)) {
+            System.out.println("Please enter the title of the book you would like to check out:");
+            String title = scanner.next();
+            checkOutBook(title);
         } else {
             System.out.println("Please select a valid option!");
         }
+    }
+
+    public static void checkOutBook(String title) {
+        bookRepository.checkOutBook(title);
+        System.out.println("book checked out!");
     }
 }
