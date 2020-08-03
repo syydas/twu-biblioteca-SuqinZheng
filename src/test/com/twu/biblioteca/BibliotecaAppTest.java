@@ -95,18 +95,27 @@ public class BibliotecaAppTest {
     }
 
     @Test
-    public void should_check_out_books_when_select_unavailable_book() {
+    public void should_not_check_out_books_when_select_unavailable_book() {
         String input = "book4";
         BibliotecaApp.checkOutBook(input);
         assertEquals(testOut.toString(), "Sorry, that book is not available\n");
     }
 
     @Test
-    public void should_return_books_when_select__book() {
+    public void should_return_books_when_return_right_book() {
         String checkOutInput = "book1";
         BibliotecaApp.checkOutBook(checkOutInput);
         String returnInput = "book1";
         BibliotecaApp.returnBook(returnInput);
         assertThat(testOut.toString(), containsString("Thank you for returning the book"));
+    }
+
+    @Test
+    public void should_not_return_books_when_return_wrong_book() {
+        String checkOutInput = "book1";
+        BibliotecaApp.checkOutBook(checkOutInput);
+        String returnInput = "book4";
+        BibliotecaApp.returnBook(returnInput);
+        assertThat(testOut.toString(), containsString("That is not a valid book to return."));
     }
 }

@@ -69,13 +69,11 @@ public class BibliotecaApp {
 
     public static void checkOutBook(String title) {
         Boolean status = bookRepository.checkOutBook(title);
-        System.out.println(status? "Thank you! Enjoy the book" : "Sorry, that book is not available");
+        System.out.println(status ? "Thank you! Enjoy the book" : "Sorry, that book is not available");
     }
 
     public static void returnBook(String title) {
         Boolean status = bookRepository.returnBook(title);
-        if (status) {
-            System.out.println("Thank you for returning the book");
-        }
+        System.out.println(status ? "Thank you for returning the book" : "That is not a valid book to return.");
     }
 }
