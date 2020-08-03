@@ -20,4 +20,16 @@ public class BookRepositoryTest {
         assertFalse(bookRepository.getBookList().contains(book));
         assertTrue(bookRepository.getCheckedOutBooks().contains(book));
     }
+
+    @Test
+    public void should_return_book_when_customers_return_book() {
+        Book book = new Book("book1", "authorA",  Year.of(1995));
+        bookRepository.addBookToList(book);
+        assertTrue(bookRepository.getBookList().contains(book));
+        bookRepository.checkOutBook("book1");
+        assertFalse(bookRepository.getBookList().contains(book));
+        bookRepository.returnBook("book1");
+        assertTrue(bookRepository.getBookList().contains(book));
+        assertFalse(bookRepository.getCheckedOutBooks().contains(book));
+    }
 }

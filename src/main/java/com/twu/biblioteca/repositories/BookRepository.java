@@ -28,6 +28,18 @@ public class BookRepository {
         }
     }
 
+    public boolean returnBook(String title) {
+        Book returnBook = checkedOutBooks.stream().filter(book -> book.getTitle().equals(title))
+                .findFirst().orElse(null);
+        if (returnBook != null) {
+            availableBooks.add(returnBook);
+            checkedOutBooks.remove(returnBook);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public List<Book> getBookList() {
         return availableBooks;
     }
