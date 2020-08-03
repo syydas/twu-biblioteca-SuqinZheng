@@ -64,6 +64,6 @@ public class BibliotecaApp {
 
     public static void checkOutBook(String title) {
         bookRepository.checkOutBook(title);
-        System.out.println("book checked out!");
+        System.out.println("Thank you! Enjoy the book");
     }
 }

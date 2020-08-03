@@ -93,6 +93,6 @@ public class BibliotecaAppTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         BibliotecaApp.checkOutBook(input);
-        assertEquals(testOut.toString(),"book checked out!\n");
+        assertEquals(testOut.toString(),"Thank you! Enjoy the book\n");
     }
 }
