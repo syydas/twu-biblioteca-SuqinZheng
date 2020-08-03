@@ -88,11 +88,16 @@ public class BibliotecaAppTest {
     }
 
     @Test
-    public void should_check_out_books_when_select_book() {
+    public void should_check_out_books_when_select_available_book() {
         String input = "book1";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
         BibliotecaApp.checkOutBook(input);
         assertEquals(testOut.toString(),"Thank you! Enjoy the book\n");
+    }
+
+    @Test
+    public void should_check_out_books_when_select_unavailable_book() {
+        String input = "book4";
+        BibliotecaApp.checkOutBook(input);
+        assertEquals(testOut.toString(), "Sorry, that book is not available\n");
     }
 }

@@ -12,10 +12,6 @@ public class BookRepository {
     public BookRepository() {
     }
 
-    public List<Book> getBookList() {
-        return availableBooks;
-    }
-
     public void addBookToList(Book book) {
         availableBooks.add(book);
     }
@@ -30,6 +26,10 @@ public class BookRepository {
         } else {
             return false;
         }
+    }
+
+    public List<Book> getBookList() {
+        return availableBooks;
     }
 
     public List<Book> getCheckedOutBooks() {

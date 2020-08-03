@@ -63,7 +63,7 @@ public class BibliotecaApp {
     }
 
     public static void checkOutBook(String title) {
-        bookRepository.checkOutBook(title);
-        System.out.println("Thank you! Enjoy the book");
+        Boolean status = bookRepository.checkOutBook(title);
+        System.out.println(status? "Thank you! Enjoy the book" : "Sorry, that book is not available");
     }
 }
