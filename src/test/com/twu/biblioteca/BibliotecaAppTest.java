@@ -107,6 +107,6 @@ public class BibliotecaAppTest {
         BibliotecaApp.checkOutBook(checkOutInput);
         String returnInput = "book1";
         BibliotecaApp.returnBook(returnInput);
-        assertThat(testOut.toString(), containsString("true"));
+        assertThat(testOut.toString(), containsString("Thank you for returning the book"));
     }
 }

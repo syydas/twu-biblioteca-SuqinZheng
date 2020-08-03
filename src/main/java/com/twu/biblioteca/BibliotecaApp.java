@@ -74,6 +74,8 @@ public class BibliotecaApp {
 
     public static void returnBook(String title) {
         Boolean status = bookRepository.returnBook(title);
-        System.out.println(status);
+        if (status) {
+            System.out.println("Thank you for returning the book");
+        }
     }
 }
