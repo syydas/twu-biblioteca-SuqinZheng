@@ -100,4 +100,13 @@ public class BibliotecaAppTest {
         BibliotecaApp.checkOutBook(input);
         assertEquals(testOut.toString(), "Sorry, that book is not available\n");
     }
+
+    @Test
+    public void should_return_books_when_select__book() {
+        String checkOutInput = "book1";
+        BibliotecaApp.checkOutBook(checkOutInput);
+        String returnInput = "book1";
+        BibliotecaApp.returnBook(returnInput);
+        assertThat(testOut.toString(), containsString("true"));
+    }
 }

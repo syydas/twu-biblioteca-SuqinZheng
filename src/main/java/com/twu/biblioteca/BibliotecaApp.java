@@ -13,6 +13,7 @@ public class BibliotecaApp {
     private static final String BOOKLIST = "1";
     private static final String QUIT = "q";
     private static final String CHECKOUT = "2";
+    private static final String RETURN = "3";
     private static final List<Book> BOOKS;
 
     static {
@@ -39,7 +40,7 @@ public class BibliotecaApp {
 
     public static void menu(Scanner scanner) {
         while (true) {
-            System.out.println("1. List of books\n2. Check out books\nq. quit\nPlease enter your choice");
+            System.out.println("1. List of books\n2. Check out books\n3. return a book\nq. quit\nPlease enter your choice");
             String choice = scanner.next();
             if (QUIT.equals(choice)) {
                 System.out.println("Biblioteca quit!");
@@ -57,6 +58,10 @@ public class BibliotecaApp {
             System.out.println("Please enter the title of the book you would like to check out:");
             String title = scanner.next();
             checkOutBook(title);
+        } else if (RETURN.equals(choice)) {
+            System.out.println("Please enter the title of the book you would like to return:");
+            String title = scanner.next();
+            returnBook(title);
         } else {
             System.out.println("Please select a valid option!");
         }
@@ -65,5 +70,10 @@ public class BibliotecaApp {
     public static void checkOutBook(String title) {
         Boolean status = bookRepository.checkOutBook(title);
         System.out.println(status? "Thank you! Enjoy the book" : "Sorry, that book is not available");
+    }
+
+    public static void returnBook(String title) {
+        Boolean status = bookRepository.returnBook(title);
+        System.out.println(status);
     }
 }
