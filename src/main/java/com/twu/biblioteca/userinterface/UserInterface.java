@@ -2,8 +2,10 @@ package com.twu.biblioteca.userinterface;
 
 import com.twu.biblioteca.entities.Book;
 import com.twu.biblioteca.entities.Movie;
+import com.twu.biblioteca.entities.User;
 import com.twu.biblioteca.repositories.BookRepository;
 import com.twu.biblioteca.repositories.MovieRepository;
+import com.twu.biblioteca.repositories.UserRepository;
 
 import java.util.Scanner;
 
@@ -19,11 +21,14 @@ public class UserInterface {
 
     private BookRepository bookRepository;
     private MovieRepository movieRepository;
+    private UserRepository userRepository;
     private Scanner scanner;
+    private String currentUserId;
 
-    public UserInterface(BookRepository bookRepository, MovieRepository movieRepository, Scanner scanner) {
+    public UserInterface(BookRepository bookRepository, MovieRepository movieRepository, UserRepository userRepository, Scanner scanner) {
         this.bookRepository = bookRepository;
         this.movieRepository = movieRepository;
+        this.userRepository = userRepository;
         this.scanner = scanner;
     }
 
@@ -31,16 +36,34 @@ public class UserInterface {
         System.out.println("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!");
     }
 
-    public void displayBookList() {
-        for (Book book : bookRepository.getBookList()) {
-            System.out.println(book);
+    public void login() {
+        while (true) {
+            System.out.println("Please enter your library id");
+            String userId = scanner.next();
+            if (enterId(userId)) {
+                currentUserId = userId;
+                System.out.println("Please enter your password");
+                String password = scanner.next();
+                if (enterPassword(password)) {
+                    menu();
+                } else {
+                    System.out.println("Sorry that's not a valid password");
+                }
+            } else {
+                System.out.println("Sorry that's not a valid Id");
+            }
         }
+
     }
 
-    public void displayMovieList() {
-        for (Movie movie : movieRepository.getMoviesList()) {
-            System.out.println(movie);
-        }
+    private boolean enterId(String id) {
+        User selectedUser = userRepository.getUserById(id);
+        return selectedUser != null;
+    }
+
+    private boolean enterPassword(String password) {
+        User selectedUser = userRepository.getUserById(currentUserId);
+        return selectedUser.getPassword().equals(password);
     }
 
     public void menu() {
@@ -75,8 +98,20 @@ public class UserInterface {
             System.out.println("Please enter the title of the movie you would like to check out:");
             String movieName = scanner.next();
             checkOutMovie(movieName);
-        }else {
+        } else {
             System.out.println("Please select a valid option!");
+        }
+    }
+
+    public void displayBookList() {
+        for (Book book : bookRepository.getBookList()) {
+            System.out.println(book);
+        }
+    }
+
+    public void displayMovieList() {
+        for (Movie movie : movieRepository.getMoviesList()) {
+            System.out.println(movie);
         }
     }
 

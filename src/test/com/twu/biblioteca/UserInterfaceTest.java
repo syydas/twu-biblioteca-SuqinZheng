@@ -4,6 +4,7 @@ import com.twu.biblioteca.entities.Book;
 import com.twu.biblioteca.entities.Movie;
 import com.twu.biblioteca.repositories.BookRepository;
 import com.twu.biblioteca.repositories.MovieRepository;
+import com.twu.biblioteca.repositories.UserRepository;
 import com.twu.biblioteca.userinterface.UserInterface;
 import org.junit.After;
 import org.junit.Before;
@@ -36,6 +37,9 @@ public class UserInterfaceTest {
 
     @Mock
     private MovieRepository movieRepository;
+
+    @Mock
+    private UserRepository userRepository;
 
     @InjectMocks
     private UserInterface userInterface;
@@ -115,7 +119,7 @@ public class UserInterfaceTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Scanner mockScanner = new Scanner(System.in);
-        UserInterface userInterface = new UserInterface(bookRepository, movieRepository, mockScanner);
+        UserInterface userInterface = new UserInterface(bookRepository, movieRepository, userRepository, mockScanner);
         userInterface.menu();
         assertThat(testOut.toString(), containsString("Please select a valid option!"));
     }
@@ -126,7 +130,7 @@ public class UserInterfaceTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Scanner mockScanner = new Scanner(System.in);
-        UserInterface userInterface = new UserInterface(bookRepository, movieRepository, mockScanner);
+        UserInterface userInterface = new UserInterface(bookRepository, movieRepository, userRepository, mockScanner);
         userInterface.menu();
         assertThat(testOut.toString(), containsString("Biblioteca quit!"));
     }
