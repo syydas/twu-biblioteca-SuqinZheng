@@ -7,13 +7,13 @@ import java.util.List;
 
 public class MovieRepository {
 
-    private static List<Movie> movies = new ArrayList<>();
+    private static List<Movie> availablemovies = new ArrayList<>();
 
     public void addMovieToList(Movie movie) {
-        movies.add(movie);
+        availablemovies.add(movie);
     }
 
     public List<Movie> getMoviesList() {
-        return movies;
+        return availablemovies;
     }
 }
