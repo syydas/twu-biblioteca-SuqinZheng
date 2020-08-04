@@ -2,6 +2,7 @@ package com.twu.biblioteca;
 
 import com.twu.biblioteca.entities.Book;
 import com.twu.biblioteca.repositories.BookRepository;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.time.Year;
@@ -11,25 +12,41 @@ import static org.junit.Assert.assertTrue;
 
 public class BookRepositoryTest {
     private BookRepository bookRepository = new BookRepository();
+    private Book testBook = new Book("book1", "authorA",  Year.of(1995));
 
-    @Test
-    public void should_checkout_book_when_customers_choose_book() {
-        Book book = new Book("book1", "authorA",  Year.of(1995));
-        bookRepository.addBookToList(book);
-        bookRepository.checkOutBook("book1");
-        assertFalse(bookRepository.getBookList().contains(book));
-        assertTrue(bookRepository.getCheckedOutBooks().contains(book));
+    @Before
+    public void addBook() {
+        bookRepository.addBookToList(testBook);
     }
 
     @Test
-    public void should_return_book_when_customers_return_book() {
-        Book book = new Book("book1", "authorA",  Year.of(1995));
-        bookRepository.addBookToList(book);
-        assertTrue(bookRepository.getBookList().contains(book));
+    public void should_have_book_in_the_booklist_after_add_book() {
+        assertTrue(bookRepository.getBookList().contains(testBook));
+    }
+
+    @Test
+    public void should_checkout_book_when_customers_choose_available_book() {
         bookRepository.checkOutBook("book1");
-        assertFalse(bookRepository.getBookList().contains(book));
+        assertFalse(bookRepository.getBookList().contains(testBook));
+        assertTrue(bookRepository.getCheckedOutBooks().contains(testBook));
+    }
+
+    @Test
+    public void should_checkout_book_when_customers_choose_unavailable_book() {
+        assertFalse(bookRepository.checkOutBook("book4"));
+    }
+
+    @Test
+    public void should_return_book_when_customers_return_right_book() {
+        bookRepository.checkOutBook("book1");
+        assertFalse(bookRepository.getBookList().contains(testBook));
         bookRepository.returnBook("book1");
-        assertTrue(bookRepository.getBookList().contains(book));
-        assertFalse(bookRepository.getCheckedOutBooks().contains(book));
+        assertTrue(bookRepository.getBookList().contains(testBook));
+        assertFalse(bookRepository.getCheckedOutBooks().contains(testBook));
+    }
+
+    @Test
+    public void should_return_book_when_customers_return_wrong_book() {
+        assertFalse(bookRepository.returnBook("book4"));
     }
 }
