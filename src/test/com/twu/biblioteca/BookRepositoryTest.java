@@ -26,19 +26,19 @@ public class BookRepositoryTest {
 
     @Test
     public void should_checkout_book_when_customers_choose_available_book() {
-        bookRepository.checkOutBook("book1");
+        bookRepository.checkOutBook("book1", "user-001");
         assertFalse(bookRepository.getBookList().contains(testBook));
         assertTrue(bookRepository.getCheckedOutBooks().contains(testBook));
     }
 
     @Test
     public void should_checkout_book_when_customers_choose_unavailable_book() {
-        assertFalse(bookRepository.checkOutBook("book4"));
+        assertFalse(bookRepository.checkOutBook("book4", "user-001"));
     }
 
     @Test
     public void should_return_book_when_customers_return_right_book() {
-        bookRepository.checkOutBook("book1");
+        bookRepository.checkOutBook("book1", "user-001");
         assertFalse(bookRepository.getBookList().contains(testBook));
         bookRepository.returnBook("book1");
         assertTrue(bookRepository.getBookList().contains(testBook));

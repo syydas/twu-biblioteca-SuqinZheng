@@ -2,6 +2,7 @@ package com.twu.biblioteca;
 
 import com.twu.biblioteca.entities.Book;
 import com.twu.biblioteca.entities.Movie;
+import com.twu.biblioteca.entities.User;
 import com.twu.biblioteca.repositories.BookRepository;
 import com.twu.biblioteca.repositories.MovieRepository;
 import com.twu.biblioteca.repositories.UserRepository;
@@ -50,6 +51,9 @@ public class UserInterfaceTest {
 
     private List<Movie> mockMovies = new ArrayList<>();
     private Movie mockMovie = new Movie("movie1", Year.of(1995), "directorA", "5");
+
+    private List<User> mockUsers = new ArrayList<>();
+    private User mockuser = new User("user-001", "password1");
 
     @Before
     public void setUpOutput() {
@@ -138,8 +142,8 @@ public class UserInterfaceTest {
     @Test
     public void should_check_out_books_when_select_available_book() {
         String input = "book1";
-        userInterface.checkOutBook(input);
-        Mockito.verify(bookRepository, times(1)).checkOutBook("book1");
+        userInterface.checkOutBook(input, null);
+        Mockito.verify(bookRepository, times(1)).checkOutBook("book1", null);
         //assertFalse(bookRepository.getBookList().contains(mockBook));
         //assertTrue(bookRepository.getCheckedOutBooks().contains(mockBook));
     }
@@ -147,8 +151,8 @@ public class UserInterfaceTest {
     @Test
     public void should_not_check_out_books_when_select_unavailable_book() {
         String input = "book4";
-        userInterface.checkOutBook(input);
-        Mockito.verify(bookRepository, times(1)).checkOutBook("book4");
+        userInterface.checkOutBook(input, null);
+        Mockito.verify(bookRepository, times(1)).checkOutBook("book4", null);
         //assertFalse(bookRepository.getCheckedOutBooks().contains(mockBook));
         //assertTrue(bookRepository.getBookList().contains(mockBook));
     }
@@ -170,7 +174,7 @@ public class UserInterfaceTest {
     @Test
     public void should_return_books_when_return_right_book() {
         String checkOutInput = "book1";
-        userInterface.checkOutBook(checkOutInput);
+        userInterface.checkOutBook(checkOutInput, null);
         String returnInput = "book1";
         userInterface.returnBook(returnInput);
         Mockito.verify(bookRepository, times(1)).returnBook("book1");
@@ -181,7 +185,7 @@ public class UserInterfaceTest {
     @Test
     public void should_not_return_books_when_return_wrong_book() {
         String checkOutInput = "book1";
-        userInterface.checkOutBook(checkOutInput);
+        userInterface.checkOutBook(checkOutInput, null);
         String returnInput = "book4";
         userInterface.returnBook(returnInput);
         Mockito.verify(bookRepository, times(1)).returnBook("book4");

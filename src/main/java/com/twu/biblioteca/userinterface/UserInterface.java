@@ -2,7 +2,6 @@ package com.twu.biblioteca.userinterface;
 
 import com.twu.biblioteca.entities.Book;
 import com.twu.biblioteca.entities.Movie;
-import com.twu.biblioteca.entities.User;
 import com.twu.biblioteca.repositories.BookRepository;
 import com.twu.biblioteca.repositories.MovieRepository;
 import com.twu.biblioteca.repositories.UserRepository;
@@ -40,30 +39,13 @@ public class UserInterface {
         while (true) {
             System.out.println("Please enter your library id");
             String userId = scanner.next();
-            if (enterId(userId)) {
-                currentUserId = userId;
-                System.out.println("Please enter your password");
-                String password = scanner.next();
-                if (enterPassword(password)) {
-                    menu();
-                } else {
-                    System.out.println("Sorry that's not a valid password");
-                }
-            } else {
-                System.out.println("Sorry that's not a valid Id");
+            System.out.println("Please enter your password");
+            String password = scanner.next();
+            Boolean isLogin = userRepository.isLogin(userId, password);
+            if (isLogin) {
+                menu();
             }
         }
-
-    }
-
-    private boolean enterId(String id) {
-        User selectedUser = userRepository.getUserById(id);
-        return selectedUser != null;
-    }
-
-    private boolean enterPassword(String password) {
-        User selectedUser = userRepository.getUserById(currentUserId);
-        return selectedUser.getPassword().equals(password);
     }
 
     public void menu() {
@@ -87,7 +69,7 @@ public class UserInterface {
         } else if (CHECKOUTBOOK.equals(choice)) {
             System.out.println("Please enter the title of the book you would like to check out:");
             String bookTitle = scanner.next();
-            checkOutBook(bookTitle);
+            checkOutBook(bookTitle, currentUserId);
         } else if (RETURNBOOK.equals(choice)) {
             System.out.println("Please enter the title of the book you would like to return:");
             String bookTitle = scanner.next();
@@ -115,8 +97,8 @@ public class UserInterface {
         }
     }
 
-    public void checkOutBook(String title) {
-        Boolean status = bookRepository.checkOutBook(title);
+    public void checkOutBook(String title, String id) {
+        Boolean status = bookRepository.checkOutBook(title, id);
         System.out.println(status ? "Thank you! Enjoy the book" : "Sorry, that book is not available");
     }
 

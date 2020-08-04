@@ -13,10 +13,11 @@ public class BookRepository {
         availableBooks.add(book);
     }
 
-    public boolean checkOutBook(String title) {
+    public boolean checkOutBook(String title, String id) {
         Book chosenBook = availableBooks.stream().filter(book -> book.getTitle().equals(title))
                 .findFirst().orElse(null);
         if (chosenBook != null) {
+            chosenBook.setUserId(id);
             availableBooks.remove(chosenBook);
             checkedOutBooks.add(chosenBook);
             return true;
@@ -29,6 +30,7 @@ public class BookRepository {
         Book returnBook = checkedOutBooks.stream().filter(book -> book.getTitle().equals(title))
                 .findFirst().orElse(null);
         if (returnBook != null) {
+            returnBook.setUserId(null);
             availableBooks.add(returnBook);
             checkedOutBooks.remove(returnBook);
             return true;

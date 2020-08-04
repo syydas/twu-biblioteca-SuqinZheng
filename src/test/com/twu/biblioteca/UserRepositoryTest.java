@@ -5,6 +5,7 @@ import com.twu.biblioteca.repositories.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class UserRepositoryTest {
@@ -19,7 +20,12 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void theOneWhereWeAddAUser() {
+    public void should_have_user_when_we_add_users() {
         assertTrue(userRepository.getUsers().contains(testUser));
+    }
+
+    @Test
+    public void should_login_when_enter_right_message() {
+        assertEquals(userRepository.isLogin("user-001", "password1"), true);
     }
 }
