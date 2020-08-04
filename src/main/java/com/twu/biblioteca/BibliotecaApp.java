@@ -26,9 +26,9 @@ public class BibliotecaApp {
         movieRepository.addMovieToList(new Movie("movie3", Year.of(1997), "directorC", "unrated"));
 
         UserRepository userRepository = new UserRepository();
-        userRepository.addUser(new User("user-001", "password1"));
-        userRepository.addUser(new User("user-002", "password2"));
-        userRepository.addUser(new User("user-003", "password3"));
+        userRepository.addUser(new User("user-001", "password1", "name1", "email1@email.com", "131XXXX"));
+        userRepository.addUser(new User("user-002", "password2", "name2", "email2@email.com", "132XXXX"));
+        userRepository.addUser(new User("user-003", "password3", "name3", "email3@email.com", "133XXXX"));
 
         UserInterface userInterface = new UserInterface(bookRepository, movieRepository, userRepository, new Scanner(System.in));
 

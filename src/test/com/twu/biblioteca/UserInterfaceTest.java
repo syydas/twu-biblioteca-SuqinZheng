@@ -53,7 +53,7 @@ public class UserInterfaceTest {
     private Movie mockMovie = new Movie("movie1", Year.of(1995), "directorA", "5");
 
     private List<User> mockUsers = new ArrayList<>();
-    private User mockuser = new User("user-001", "password1");
+    private User mockuser = new User("user-001", "password1", "name1", "email1@email.com", "131XXXX");
 
     @Before
     public void setUpOutput() {
@@ -70,6 +70,12 @@ public class UserInterfaceTest {
     public void addMovies() {
         mockMovies.add(mockMovie);
         Mockito.when(movieRepository.getMoviesList()).thenReturn(mockMovies);
+    }
+
+    @Before
+    public void addUsers() {
+        mockUsers.add(mockuser);
+        Mockito.when(userRepository.getUsers()).thenReturn(mockUsers);
     }
 
     @After

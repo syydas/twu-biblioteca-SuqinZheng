@@ -16,6 +16,7 @@ public class UserInterface {
     private static final String RETURNBOOK = "3";
     private static final String MOVIELIST = "4";
     private static final String CHECKOUTMOVIE = "5";
+    private static final String VIEWINFO = "6";
     private static final String QUIT = "q";
 
     private BookRepository bookRepository;
@@ -43,6 +44,7 @@ public class UserInterface {
             String password = scanner.next();
             Boolean isLogin = userRepository.isLogin(userId, password);
             if (isLogin) {
+                currentUserId = userId;
                 menu();
             }
         }
@@ -51,7 +53,7 @@ public class UserInterface {
     public void menu() {
         while (true) {
             System.out.println("\nMEAU:\n1. List of books\n2. Check out books\n3. return a book\n" +
-                    "4. List of movies\n5. Check out movies\n" +
+                    "4. List of movies\n5. Check out movies\n6. view information\n" +
                     "q. quit\nPlease enter your choice: ");
             String choice = scanner.next();
             if (QUIT.equals(choice)) {
@@ -80,6 +82,8 @@ public class UserInterface {
             System.out.println("Please enter the title of the movie you would like to check out:");
             String movieName = scanner.next();
             checkOutMovie(movieName);
+        } else if (VIEWINFO.equals(choice)) {
+            viewUserInfo();
         } else {
             System.out.println("Please select a valid option!");
         }
@@ -110,5 +114,9 @@ public class UserInterface {
     public void returnBook(String title) {
         Boolean status = bookRepository.returnBook(title);
         System.out.println(status ? "Thank you for returning the book" : "That is not a valid book to return.");
+    }
+
+    public void viewUserInfo() {
+        System.out.println(userRepository.getUserById(currentUserId));
     }
 }
