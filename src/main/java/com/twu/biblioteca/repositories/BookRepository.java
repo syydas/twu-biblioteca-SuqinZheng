@@ -9,9 +9,6 @@ public class BookRepository {
     private static List<Book> checkedOutBooks = new ArrayList<>();
     private static List<Book> availableBooks = new ArrayList<>();
 
-    public BookRepository() {
-    }
-
     public void addBookToList(Book book) {
         availableBooks.add(book);
     }

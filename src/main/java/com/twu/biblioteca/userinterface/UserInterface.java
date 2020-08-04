@@ -1,7 +1,9 @@
 package com.twu.biblioteca.userinterface;
 
 import com.twu.biblioteca.entities.Book;
+import com.twu.biblioteca.entities.Movie;
 import com.twu.biblioteca.repositories.BookRepository;
+import com.twu.biblioteca.repositories.MovieRepository;
 
 import java.util.Scanner;
 
@@ -11,13 +13,16 @@ public class UserInterface {
     private static final String BOOKLIST = "1";
     private static final String CHECKOUT = "2";
     private static final String RETURN = "3";
+    private static final String MOVIELIST = "4";
     private static final String QUIT = "q";
 
     private BookRepository bookRepository;
+    private MovieRepository movieRepository;
     private Scanner scanner;
 
-    public UserInterface(BookRepository bookRepository, Scanner scanner) {
+    public UserInterface(BookRepository bookRepository, MovieRepository movieRepository, Scanner scanner) {
         this.bookRepository = bookRepository;
+        this.movieRepository = movieRepository;
         this.scanner = scanner;
     }
 
@@ -31,9 +36,17 @@ public class UserInterface {
         }
     }
 
+    public void displayMovieList() {
+        for (Movie movie : movieRepository.getMoviesList()) {
+            System.out.println(movie);
+        }
+    }
+
     public void menu() {
         while (true) {
-            System.out.println("1. List of books\n2. Check out books\n3. return a book\nq. quit\nPlease enter your choice");
+            System.out.println("1. List of books\n2. Check out books\n3. return a book\n" +
+                    "4. List of movies\n" +
+                    "q. quit\nPlease enter your choice");
             String choice = scanner.next();
             if (QUIT.equals(choice)) {
                 System.out.println("Biblioteca quit!");
@@ -55,6 +68,8 @@ public class UserInterface {
             System.out.println("Please enter the title of the book you would like to return:");
             String title = scanner.next();
             returnBook(title);
+        } else if (MOVIELIST.equals(choice)) {
+            displayMovieList();
         } else {
             System.out.println("Please select a valid option!");
         }

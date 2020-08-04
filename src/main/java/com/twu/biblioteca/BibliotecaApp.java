@@ -2,7 +2,9 @@ package com.twu.biblioteca;
 
 
 import com.twu.biblioteca.entities.Book;
+import com.twu.biblioteca.entities.Movie;
 import com.twu.biblioteca.repositories.BookRepository;
+import com.twu.biblioteca.repositories.MovieRepository;
 import com.twu.biblioteca.userinterface.UserInterface;
 
 import java.time.Year;
@@ -16,7 +18,12 @@ public class BibliotecaApp {
         bookRepository.addBookToList(new Book("book2", "authorB", Year.of(1991)));
         bookRepository.addBookToList(new Book("book3", "authorC", Year.of(1997)));
 
-        UserInterface userInterface = new UserInterface(bookRepository, new Scanner(System.in));
+        MovieRepository movieRepository = new MovieRepository();
+        movieRepository.addMovieToList(new Movie("movie1", Year.of(1995), "directorA", "5"));
+        movieRepository.addMovieToList(new Movie("movie2", Year.of(1991), "directorB", "10"));
+        movieRepository.addMovieToList(new Movie("movie3", Year.of(1997), "directorC", "unrated"));
+
+        UserInterface userInterface = new UserInterface(bookRepository, movieRepository, new Scanner(System.in));
 
         userInterface.printWelcomeMessage();
         userInterface.menu();

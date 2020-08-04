@@ -1,7 +1,9 @@
 package com.twu.biblioteca;
 
 import com.twu.biblioteca.entities.Book;
+import com.twu.biblioteca.entities.Movie;
 import com.twu.biblioteca.repositories.BookRepository;
+import com.twu.biblioteca.repositories.MovieRepository;
 import com.twu.biblioteca.userinterface.UserInterface;
 import org.junit.After;
 import org.junit.Before;
@@ -32,26 +34,39 @@ public class UserInterfaceTest {
     @Mock
     private BookRepository bookRepository;
 
+    @Mock
+    private MovieRepository movieRepository;
+
     @InjectMocks
     private UserInterface userInterface;
 
     private List<Book> mockBooks = new ArrayList<>();
     private Book mockBook = new Book("book1", "authorA", Year.of(1995));
 
+
+    private List<Movie> mockMovies = new ArrayList<>();
+    private Movie mockMovie = new Movie("movie1", Year.of(1995), "directorA", "5");
+
     @Before
     public void setUpOutput() {
         System.setOut(new PrintStream(testOut));
-    }
-
-    @After
-    public void restoreSystemInputOutput() {
-        System.setOut(System.out);
     }
 
     @Before
     public void addBooks() {
         mockBooks.add(mockBook);
         Mockito.when(bookRepository.getBookList()).thenReturn(mockBooks);
+    }
+
+    @Before
+    public void addMovies() {
+        mockMovies.add(mockMovie);
+        Mockito.when(movieRepository.getMoviesList()).thenReturn(mockMovies);
+    }
+
+    @After
+    public void restoreSystemInputOutput() {
+        System.setOut(System.out);
     }
 
     @Test
@@ -61,29 +76,46 @@ public class UserInterfaceTest {
     }
 
     @Test
-    public void give_booklist_after_the_welcome_message_appears() {
+    public void should_return_booklist_when_select_list_of_book() {
         userInterface.displayBookList();
         assertThat(testOut.toString(), containsString(bookRepository.getBookList().get(0).toString()));
     }
 
     @Test
+    public void should_return_movielist_when_select_list_of_movie() {
+        userInterface.displayMovieList();
+        assertThat(testOut.toString(), containsString(movieRepository.getMoviesList().get(0).toString()));
+    }
+
+    /*@Test
     public void should_return_booklist_when_select_list_of_book() {
         String input = "1 q";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Scanner mockScanner = new Scanner(System.in);
-        UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
+        UserInterface userInterface = new UserInterface(bookRepository, movieRepository, mockScanner);
         userInterface.menu();
         assertThat(testOut.toString(), containsString(bookRepository.getBookList().get(0).toString()));
     }
 
     @Test
-    public void should_throw_wrong_message_when_select_wrong() {
-        String input = "5 q";
+    public void should_return_movielist_when_select_list_of_book() {
+        String input = "4 q";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Scanner mockScanner = new Scanner(System.in);
-        UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
+        UserInterface userInterface = new UserInterface(bookRepository, movieRepository, mockScanner);
+        userInterface.menu();
+        assertThat(testOut.toString(), containsString(movieRepository.getMoviesList().get(0).toString()));
+    }*/
+
+    @Test
+    public void should_throw_wrong_message_when_select_wrong() {
+        String input = "10 q";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        Scanner mockScanner = new Scanner(System.in);
+        UserInterface userInterface = new UserInterface(bookRepository, movieRepository, mockScanner);
         userInterface.menu();
         assertThat(testOut.toString(), containsString("Please select a valid option!"));
     }
@@ -94,7 +126,7 @@ public class UserInterfaceTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Scanner mockScanner = new Scanner(System.in);
-        UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
+        UserInterface userInterface = new UserInterface(bookRepository, movieRepository, mockScanner);
         userInterface.menu();
         assertThat(testOut.toString(), containsString("Biblioteca quit!"));
     }
