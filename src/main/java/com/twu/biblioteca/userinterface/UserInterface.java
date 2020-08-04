@@ -11,9 +11,10 @@ import java.util.Scanner;
 public class UserInterface {
 
     private static final String BOOKLIST = "1";
-    private static final String CHECKOUT = "2";
-    private static final String RETURN = "3";
+    private static final String CHECKOUTBOOK = "2";
+    private static final String RETURNBOOK = "3";
     private static final String MOVIELIST = "4";
+    private static final String CHECKOUTMOVIE = "5";
     private static final String QUIT = "q";
 
     private BookRepository bookRepository;
@@ -44,9 +45,9 @@ public class UserInterface {
 
     public void menu() {
         while (true) {
-            System.out.println("1. List of books\n2. Check out books\n3. return a book\n" +
-                    "4. List of movies\n" +
-                    "q. quit\nPlease enter your choice");
+            System.out.println("\nMEAU:\n1. List of books\n2. Check out books\n3. return a book\n" +
+                    "4. List of movies\n5. Check out movies\n" +
+                    "q. quit\nPlease enter your choice: ");
             String choice = scanner.next();
             if (QUIT.equals(choice)) {
                 System.out.println("Biblioteca quit!");
@@ -60,17 +61,21 @@ public class UserInterface {
         Scanner scanner = new Scanner(System.in);
         if (BOOKLIST.equals(choice)) {
             displayBookList();
-        } else if (CHECKOUT.equals(choice)) {
+        } else if (CHECKOUTBOOK.equals(choice)) {
             System.out.println("Please enter the title of the book you would like to check out:");
-            String title = scanner.next();
-            checkOutBook(title);
-        } else if (RETURN.equals(choice)) {
+            String bookTitle = scanner.next();
+            checkOutBook(bookTitle);
+        } else if (RETURNBOOK.equals(choice)) {
             System.out.println("Please enter the title of the book you would like to return:");
-            String title = scanner.next();
-            returnBook(title);
+            String bookTitle = scanner.next();
+            returnBook(bookTitle);
         } else if (MOVIELIST.equals(choice)) {
             displayMovieList();
-        } else {
+        } else if (CHECKOUTMOVIE.equals(choice)) {
+            System.out.println("Please enter the title of the movie you would like to check out:");
+            String movieName = scanner.next();
+            checkOutMovie(movieName);
+        }else {
             System.out.println("Please select a valid option!");
         }
     }
@@ -78,6 +83,11 @@ public class UserInterface {
     public void checkOutBook(String title) {
         Boolean status = bookRepository.checkOutBook(title);
         System.out.println(status ? "Thank you! Enjoy the book" : "Sorry, that book is not available");
+    }
+
+    public void checkOutMovie(String name) {
+        Boolean status = movieRepository.checkOutMovie(name);
+        System.out.println(status ? "Thank you! Enjoy the movie" : "Sorry, that movie is not available");
     }
 
     public void returnBook(String title) {

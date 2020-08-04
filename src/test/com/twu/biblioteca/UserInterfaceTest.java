@@ -150,6 +150,20 @@ public class UserInterfaceTest {
     }
 
     @Test
+    public void should_check_out_movies_when_select_available_book() {
+        String input = "movie1";
+        userInterface.checkOutMovie(input);
+        Mockito.verify(movieRepository, times(1)).checkOutMovie("movie1");
+    }
+
+    @Test
+    public void should_check_out_movies_when_select_unavailable_book() {
+        String input = "movie4";
+        userInterface.checkOutMovie(input);
+        Mockito.verify(movieRepository, times(1)).checkOutMovie("movie4");
+    }
+
+    @Test
     public void should_return_books_when_return_right_book() {
         String checkOutInput = "book1";
         userInterface.checkOutBook(checkOutInput);
