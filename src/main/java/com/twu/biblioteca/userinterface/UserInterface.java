@@ -69,28 +69,44 @@ public class UserInterface {
 
     public void handle(String choice) {
         Scanner scanner = new Scanner(System.in);
-        if (BOOKLIST.equals(choice)) {
-            displayBookList();
-        } else if (CHECKOUTBOOK.equals(choice)) {
-            System.out.println("Please enter the title of the book you would like to check out:");
-            String bookTitle = scanner.next();
-            checkOutBook(bookTitle, currentUserId);
-        } else if (RETURNBOOK.equals(choice)) {
-            System.out.println("Please enter the title of the book you would like to return:");
-            String bookTitle = scanner.next();
-            returnBook(bookTitle);
-        } else if (MOVIELIST.equals(choice)) {
-            displayMovieList();
-        } else if (CHECKOUTMOVIE.equals(choice)) {
-            System.out.println("Please enter the title of the movie you would like to check out:");
-            String movieName = scanner.next();
-            checkOutMovie(movieName);
-        } else if (VIEWOUTBOOKS.equals(choice)) {
-            viewCheckedOutBooks();
-        } else if (VIEWINFO.equals(choice)) {
-            viewUserInfo();
-        } else {
-            System.out.println("Please select a valid option!");
+        switch (choice) {
+            case BOOKLIST: {
+                displayBookList();
+                break;
+            }
+            case CHECKOUTBOOK: {
+                System.out.println("Please enter the title of the book you would like to check out:");
+                String bookTitle = scanner.next();
+                checkOutBook(bookTitle, currentUserId);
+                break;
+            }
+            case RETURNBOOK: {
+                System.out.println("Please enter the title of the book you would like to return:");
+                String bookTitle = scanner.next();
+                returnBook(bookTitle);
+                break;
+            }
+            case MOVIELIST: {
+                displayMovieList();
+                break;
+            }
+            case CHECKOUTMOVIE: {
+                System.out.println("Please enter the title of the movie you would like to check out:");
+                String movieName = scanner.next();
+                checkOutMovie(movieName);
+                break;
+            }
+            case VIEWOUTBOOKS: {
+                viewCheckedOutBooks();
+                break;
+            }
+            case VIEWINFO: {
+                viewUserInfo();
+                break;
+            }
+            default: {
+                System.out.println("Please select a valid option!");
+            }
         }
     }
 
