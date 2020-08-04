@@ -68,7 +68,6 @@ public class UserInterface {
     }
 
     public void handle(String choice) {
-        Scanner scanner = new Scanner(System.in);
         switch (choice) {
             case BOOKLIST: {
                 displayBookList();
