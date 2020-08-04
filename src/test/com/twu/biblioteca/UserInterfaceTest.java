@@ -2,10 +2,12 @@ package com.twu.biblioteca;
 
 import com.twu.biblioteca.entities.Book;
 import com.twu.biblioteca.repositories.BookRepository;
+import com.twu.biblioteca.userinterface.UserInterface;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -20,15 +22,19 @@ import java.util.List;
 import java.util.Scanner;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.times;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BibliotecaAppTest {
+public class UserInterfaceTest {
     private ByteArrayOutputStream testOut = new ByteArrayOutputStream();
 
     @Mock
     private BookRepository bookRepository;
+
+    @InjectMocks
+    private UserInterface userInterface;
+
     private List<Book> mockBooks = new ArrayList<>();
     private Book mockBook = new Book("book1", "authorA", Year.of(1995));
 
@@ -50,13 +56,13 @@ public class BibliotecaAppTest {
 
     @Test
     public void give_welcome_message_when_start_the_application() {
-        BibliotecaApp.printWelcomeMessage();
+        userInterface.printWelcomeMessage();
         assertEquals(testOut.toString(), "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!\n");
     }
 
     @Test
     public void give_booklist_after_the_welcome_message_appears() {
-        BibliotecaApp.displayBookList();
+        userInterface.displayBookList();
         assertThat(testOut.toString(), containsString(bookRepository.getBookList().get(0).toString()));
     }
 
@@ -65,7 +71,9 @@ public class BibliotecaAppTest {
         String input = "1 q";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-        BibliotecaApp.menu(new Scanner(System.in));
+        Scanner mockScanner = new Scanner(System.in);
+        UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
+        userInterface.menu();
         assertThat(testOut.toString(), containsString(bookRepository.getBookList().get(0).toString()));
     }
 
@@ -74,7 +82,9 @@ public class BibliotecaAppTest {
         String input = "5 q";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-        BibliotecaApp.menu(new Scanner(System.in));
+        Scanner mockScanner = new Scanner(System.in);
+        UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
+        userInterface.menu();
         assertThat(testOut.toString(), containsString("Please select a valid option!"));
     }
 
@@ -83,39 +93,48 @@ public class BibliotecaAppTest {
         String input = "q";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
-        BibliotecaApp.menu(new Scanner(System.in));
+        Scanner mockScanner = new Scanner(System.in);
+        UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
+        userInterface.menu();
         assertThat(testOut.toString(), containsString("Biblioteca quit!"));
     }
 
     @Test
     public void should_check_out_books_when_select_available_book() {
         String input = "book1";
-        BibliotecaApp.checkOutBook(input);
-        assertEquals(testOut.toString(),"Thank you! Enjoy the book\n");
+        userInterface.checkOutBook(input);
+        Mockito.verify(bookRepository, times(1)).checkOutBook("book1");
+        //assertFalse(bookRepository.getBookList().contains(mockBook));
+        //assertTrue(bookRepository.getCheckedOutBooks().contains(mockBook));
     }
 
     @Test
     public void should_not_check_out_books_when_select_unavailable_book() {
         String input = "book4";
-        BibliotecaApp.checkOutBook(input);
-        assertEquals(testOut.toString(), "Sorry, that book is not available\n");
+        userInterface.checkOutBook(input);
+        Mockito.verify(bookRepository, times(1)).checkOutBook("book4");
+        assertFalse(bookRepository.getCheckedOutBooks().contains(mockBook));
+        assertTrue(bookRepository.getBookList().contains(mockBook));
     }
 
     @Test
     public void should_return_books_when_return_right_book() {
         String checkOutInput = "book1";
-        BibliotecaApp.checkOutBook(checkOutInput);
+        userInterface.checkOutBook(checkOutInput);
         String returnInput = "book1";
-        BibliotecaApp.returnBook(returnInput);
-        assertThat(testOut.toString(), containsString("Thank you for returning the book"));
+        userInterface.returnBook(returnInput);
+        Mockito.verify(bookRepository, times(1)).returnBook("book1");
+        assertTrue(bookRepository.getBookList().contains(mockBook));
+        assertFalse(bookRepository.getCheckedOutBooks().contains(mockBook));
     }
 
     @Test
     public void should_not_return_books_when_return_wrong_book() {
         String checkOutInput = "book1";
-        BibliotecaApp.checkOutBook(checkOutInput);
+        userInterface.checkOutBook(checkOutInput);
         String returnInput = "book4";
-        BibliotecaApp.returnBook(returnInput);
+        userInterface.returnBook(returnInput);
+        Mockito.verify(bookRepository, times(1)).returnBook("book4");
         assertThat(testOut.toString(), containsString("That is not a valid book to return."));
     }
 }
