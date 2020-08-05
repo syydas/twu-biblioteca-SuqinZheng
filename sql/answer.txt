@@ -43,3 +43,13 @@ WHERE m.id = c.member_id
     AND b.id = c.book_id
     AND b.title = 'The Pragmatic Programmer';
 
+5. Who has checked out more than 1 item? ---- Anand Beck & Frank Smith
+   Tip: Research the GROUP BY syntax.
+
+SELECT name
+FROM member
+WHERE id IN
+    (SELECT member_id
+    FROM checkout_item
+    GROUP BY member_id
+    HAVING COUNT(*) > 1);
