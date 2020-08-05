@@ -6,3 +6,11 @@ WHERE m.id = c.member_id
     AND b.id = c.book_id
     AND b.title = 'The Hobbit';
 
+2. How many people have not checked out anything? ---- 37
+
+SELECT count(*)
+FROM member
+WHERE id
+NOT IN
+(SELECT member_id FROM checkout_item);
+
