@@ -1,4 +1,4 @@
-package com.twu.biblioteca.userinterface;
+package com.twu.biblioteca.userinteraction;
 
 import com.twu.biblioteca.entities.Book;
 import com.twu.biblioteca.entities.Movie;
@@ -9,7 +9,7 @@ import com.twu.biblioteca.repositories.UserRepository;
 import java.util.Scanner;
 
 
-public class UserInterface {
+public class UserInteraction {
 
     private static final String BOOKLIST = "1";
     private static final String CHECKOUTBOOK = "2";
@@ -26,7 +26,7 @@ public class UserInterface {
     private Scanner scanner;
     private String currentUserId;
 
-    public UserInterface(BookRepository bookRepository, MovieRepository movieRepository, UserRepository userRepository, Scanner scanner) {
+    public UserInteraction(BookRepository bookRepository, MovieRepository movieRepository, UserRepository userRepository, Scanner scanner) {
         this.bookRepository = bookRepository;
         this.movieRepository = movieRepository;
         this.userRepository = userRepository;

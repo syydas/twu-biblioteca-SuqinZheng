@@ -7,7 +7,7 @@ import com.twu.biblioteca.entities.User;
 import com.twu.biblioteca.repositories.BookRepository;
 import com.twu.biblioteca.repositories.MovieRepository;
 import com.twu.biblioteca.repositories.UserRepository;
-import com.twu.biblioteca.userinterface.UserInterface;
+import com.twu.biblioteca.userinteraction.UserInteraction;
 
 import java.time.Year;
 import java.util.Scanner;
@@ -30,10 +30,10 @@ public class BibliotecaApp {
         userRepository.addUser(new User("user-002", "password2", "name2", "email2@email.com", "132XXXX"));
         userRepository.addUser(new User("user-003", "password3", "name3", "email3@email.com", "133XXXX"));
 
-        UserInterface userInterface = new UserInterface(bookRepository, movieRepository, userRepository, new Scanner(System.in));
+        UserInteraction userInteraction = new UserInteraction(bookRepository, movieRepository, userRepository, new Scanner(System.in));
 
-        userInterface.printWelcomeMessage();
-        userInterface.login();
+        userInteraction.printWelcomeMessage();
+        userInteraction.login();
     }
 
 }
